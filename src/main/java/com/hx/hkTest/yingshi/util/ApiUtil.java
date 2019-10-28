@@ -1,9 +1,26 @@
 package com.hx.hkTest.yingshi.util;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.codec.CharEncoding;
+import org.springframework.util.StringUtils;
+
+import com.alibaba.fastjson.JSONObject;
+import com.hx.hkTest.common.cache.YingShiCache;
+import com.hx.hkTest.common.constant.CommonConstant;
+import com.hx.hkTest.common.enums.ErrorCodeEnum;
+import com.hx.hkTest.common.exception.BusinsessException;
+import com.hx.hkTest.utils.HttpClientUtil;
+import com.hx.hkTest.yingshi.dto.device.select.CameraListDto;
+import com.hx.hkTest.yingshi.dto.device.select.DeviceCameraListDto;
+import com.hx.hkTest.yingshi.dto.device.select.DeviceCapacityDto;
 import com.hx.hkTest.yingshi.dto.device.select.DeviceInfoDto;
 import com.hx.hkTest.yingshi.dto.device.select.DeviceListDto;
+import com.hx.hkTest.yingshi.dto.device.select.DeviceSupportEzvizDto;
+import com.hx.hkTest.yingshi.dto.device.select.StatusGetDto;
+import com.hx.hkTest.yingshi.dto.device.select.VideoByTimeDto;
 import com.hx.hkTest.yingshi.dto.live.LiveAddressLimitedDto;
 import com.hx.hkTest.yingshi.dto.live.LiveVideoCloseDto;
 import com.hx.hkTest.yingshi.dto.live.LiveVideoListDto;
@@ -216,5 +233,81 @@ public class ApiUtil {
 	 */
 	public static DeviceInfoDto deviceInfo(String deviceSerial){
 		return DeviceSelectApi.deviceInfo(deviceSerial);
+	}
+	
+	/**
+	 * 功能描述：获取监控点列表
+	 * @author: xiahui
+	 * @param pageStart：分页起始页，从0开始（非必填）
+	 * @param pageSize：分页大小，默认为10，最大为50（非必填）	
+	 * @return List<CameraListDto>：监控点列表
+	 * @date: 2019年10月28日 上午10:09:42
+	 */
+	public static List<CameraListDto> cameraList(String pageStart, String pageSize) {
+		return DeviceSelectApi.cameraList(pageStart, pageSize);
+	}
+	
+	/**
+	 * 功能描述：该接口用于根据序列号通道号获取设备状态信息
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @param channel：通道号,默认为1（非必填）	
+	 * @return StatusGetDto：设备状态信息
+	 * @date: 2019年10月28日 上午10:09:42
+	 */
+	public static StatusGetDto statusGet(String deviceSerial, String channel) {
+		return DeviceSelectApi.statusGet(deviceSerial, channel);
+	}
+	
+	/**
+	 * 功能描述：获取指定设备的通道信息
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写	
+	 * @return DeviceCameraListDto：通道信息
+	 * @date: 2019年10月28日 上午10:26:37
+	 */
+	public static DeviceCameraListDto deviceCameraList(String deviceSerial) {
+		return DeviceSelectApi.deviceCameraList(deviceSerial);
+	}
+	
+	/**
+	 * 功能描述：查询设备是否支持萤石协议
+	 * @author: xiahui
+	 * @param appKey：用户appKey（必填）
+	 * @param model：设备型号（必填）
+	 * @param version：设备版本号	（必填）
+	 * @return boolean：是否支持萤石协议
+	 * @date: 2019年10月28日 上午10:41:18
+	 */
+	public static List<DeviceSupportEzvizDto> deviceSupportEzviz(String appKey, String model, String version) {
+		return DeviceSelectApi.deviceSupportEzviz(appKey, model, version);
+	}
+	
+	/**
+	 * 功能描述：根据设备序列号查询设备能力集
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）	
+	 * @return DeviceCapacityDto：设备能力集
+	 * @date: 2019年10月28日 上午10:26:37
+	 */
+	public static DeviceCapacityDto deviceCapacity(String deviceSerial) {
+		return DeviceSelectApi.deviceCapacity(deviceSerial);
+	}
+
+
+	/**
+	 * 功能描述：该接口用于根据时间获取存储文件信息
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @param channelNo：通道号，非必选，默认为1（非必填）
+	 * @param startTime：起始时间，时间格式为：1378345128000。非必选，默认为当天0点（非必填）
+	 * @param endTime：结束时间，时间格式为：1378345128000。非必选，默认为当前时间（非必填）
+	 * @param recType：回放源，0-系统自动选择，1-云存储，2-本地录像。非必选，默认为0（非必填）
+	 * @return List<VideoByTimeDto>：存储文件信息
+	 * @date: 2019年10月28日 下午2:06:51
+	 */
+	public static List<VideoByTimeDto> videoByTime(String deviceSerial, String channelNo, String startTime,
+			String endTime, String recType) {
+		return DeviceSelectApi.videoByTime(deviceSerial, channelNo, startTime, endTime, recType);
 	}
 }
