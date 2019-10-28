@@ -1,18 +1,7 @@
 package com.hx.hkTest.yingshi.util;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.codec.CharEncoding;
-import org.springframework.util.StringUtils;
-
-import com.alibaba.fastjson.JSONObject;
-import com.hx.hkTest.common.cache.YingShiCache;
-import com.hx.hkTest.common.constant.CommonConstant;
-import com.hx.hkTest.common.enums.ErrorCodeEnum;
-import com.hx.hkTest.common.exception.BusinsessException;
-import com.hx.hkTest.utils.HttpClientUtil;
 import com.hx.hkTest.yingshi.dto.device.select.CameraListDto;
 import com.hx.hkTest.yingshi.dto.device.select.DeviceCameraListDto;
 import com.hx.hkTest.yingshi.dto.device.select.DeviceCapacityDto;
@@ -27,6 +16,7 @@ import com.hx.hkTest.yingshi.dto.live.LiveVideoListDto;
 import com.hx.hkTest.yingshi.dto.live.LiveVideoOpenDto;
 import com.hx.hkTest.yingshi.util.api.AccessTokenApi;
 import com.hx.hkTest.yingshi.util.api.LiveApi;
+import com.hx.hkTest.yingshi.util.api.device.DeviceConfigApi;
 import com.hx.hkTest.yingshi.util.api.device.DeviceManageApi;
 import com.hx.hkTest.yingshi.util.api.device.DeviceSelectApi;
 
@@ -309,5 +299,88 @@ public class ApiUtil {
 	public static List<VideoByTimeDto> videoByTime(String deviceSerial, String channelNo, String startTime,
 			String endTime, String recType) {
 		return DeviceSelectApi.videoByTime(deviceSerial, channelNo, startTime, endTime, recType);
+	}
+	
+	/**
+	 * 功能描述：1.对设备布撤防状态进行修改（活动检测开关），实现布防和撤防功能
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @param isDefence：具有防护能力设备布撤防状态：0-睡眠，8-在家，16-外出，普通IPC设备布撤防状态：0-撤防，1-布防（必填）
+	 * @return boolean：操作是否成功
+	 * @date: 2019年10月28日 下午2:28:36
+	 */
+	public static boolean deviceDefenceSet(String deviceSerial, String isDefence) {
+		return DeviceConfigApi.deviceDefenceSet(deviceSerial, isDefence);
+	}
+	
+	/**
+	 * 功能描述：关闭设备视频加密
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @param validateCode：设备验证码，设备机身上的六位大写字母（必填）
+	 * @return boolean：是否成功
+	 * @date: 2019年10月28日 下午2:35:43
+	 */
+	public static boolean deviceEncryptOff(String deviceSerial, String validateCode) {
+		return DeviceConfigApi.deviceEncryptOff(deviceSerial, validateCode);
+	}
+	
+	/**
+	 * 功能描述：开启设备视频加密
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @return boolean：是否成功
+	 * @date: 2019年10月28日 下午2:35:43
+	 */
+	public static boolean deviceEncryptOff(String deviceSerial) {
+		return DeviceConfigApi.deviceEncryptOn(deviceSerial);
+	}
+	
+	/**
+	 * 功能描述：获取wifi配置提示音开关状态
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @return boolean：提示音开关状态是否开启
+	 * @date: 2019年10月28日 下午2:35:43
+	 */
+	public static boolean deviceSoundSwitchStatus(String deviceSerial) {
+		return DeviceConfigApi.deviceSoundSwitchStatus(deviceSerial);
+	}
+	
+	/**
+	 * 功能描述：设置wifi配置提示音开关
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @param enable：状态：0-关闭，1-开启
+	 * @param channelNo：通道号，不传表示设备本身
+	 * @return boolean：操作是否成功
+	 * @date: 2019年10月28日 下午2:48:31
+	 */
+	public static boolean deviceSoundSwitchSet(String deviceSerial, String enable, String channelNo) {
+		return DeviceConfigApi.deviceSoundSwitchSet(deviceSerial, enable, channelNo);
+	}
+	
+	/**
+	 * 功能描述：获取镜头遮蔽开关状态
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @return boolean：镜头遮蔽开关状态是否开启
+	 * @date: 2019年10月28日 下午2:35:43
+	 */
+	public static boolean deviceSceneSwitchStatus(String deviceSerial) {
+		return DeviceConfigApi.deviceSceneSwitchStatus(deviceSerial);
+	}
+	
+	/**
+	 * 功能描述：设置镜头遮蔽开关
+	 * @author: xiahui
+	 * @param deviceSerial：设备序列号,存在英文字母的设备序列号，字母需为大写（必填）
+	 * @param enable：状态：0-关闭，1-开启
+	 * @param channelNo：通道号，不传表示设备本身
+	 * @return boolean：操作是否成功
+	 * @date: 2019年10月28日 下午2:48:31
+	 */
+	public static boolean deviceSceneSwitchSet(String deviceSerial, String enable, String channelNo) {
+		return DeviceConfigApi.deviceSceneSwitchSet(deviceSerial, enable, channelNo);
 	}
 }
