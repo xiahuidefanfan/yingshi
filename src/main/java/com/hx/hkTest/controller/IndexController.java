@@ -12,4 +12,10 @@ public class IndexController {
         return "/demo";
     }
 	
+	@RequestMapping("/approval")
+    public String approval() {
+        return "/approval";
+    }
+	
+	
 }
