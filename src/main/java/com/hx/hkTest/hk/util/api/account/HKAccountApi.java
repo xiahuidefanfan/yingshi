@@ -14,6 +14,7 @@ import com.hx.hkTest.common.enums.ErrorCodeEnum;
 import com.hx.hkTest.common.exception.BusinsessException;
 import com.hx.hkTest.hk.dto.account.HKRamAccountInfoDto;
 import com.hx.hkTest.hk.dto.account.Policy;
+import com.hx.hkTest.hk.dto.account.Statement;
 import com.hx.hkTest.hk.util.api.AccessTokenApi;
 import com.hx.hkTest.utils.HttpClientUtil;
 
@@ -124,6 +125,103 @@ public class HKAccountApi {
 	}
 	
 	/**
+	 * 功能描述: 4.增加子账户权限
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @param: statement：授权语句
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramStatementAdd(String accessToken, String accountId, Statement statement) {
+		if(StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(accountId) || null == statement) {
+			throw new BusinsessException(ErrorCodeEnum.YINGSHI_10001);
+		}
+		
+		Map<String, String> params = new HashMap<>();
+    	params.put("accessToken", accessToken);
+    	params.put("accountId", accountId); 
+    	params.put("statement", JSONObject.toJSONString(statement));
+    	JSONObject result = HttpClientUtil.doPost(RAM_STATEMENT_ADD, params, CharEncoding.UTF_8);
+    	if(CommonConstant.SUCCESS.equals(result.getString("code"))) {
+    		return true;
+    	}else {
+    		throw new BusinsessException(ErrorCodeEnum.getEnum(result.getString("code")));
+    	}
+	}
+	
+	/**
+	 * 功能描述: 5.删除子账户权限。
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @param: deviceSerial：设备序列号
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramStatementDelete(String accessToken, String accountId, String deviceSerial) {
+		if(StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(accountId) ||
+				StringUtils.isEmpty(deviceSerial)) {
+			throw new BusinsessException(ErrorCodeEnum.YINGSHI_10001);
+		}
+		
+		Map<String, String> params = new HashMap<>();
+    	params.put("accessToken", accessToken);
+    	params.put("accountId", accountId); 
+    	params.put("deviceSerial", deviceSerial);
+    	JSONObject result = HttpClientUtil.doPost(RAM_STATEMENT_DELETE, params, CharEncoding.UTF_8);
+    	if(CommonConstant.SUCCESS.equals(result.getString("code"))) {
+    		return true;
+    	}else {
+    		throw new BusinsessException(ErrorCodeEnum.getEnum(result.getString("code")));
+    	}
+	}
+	
+	/**
+	 * 功能描述: 6.获取B模式子账户accessToken。
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramTokenGet(String accessToken, String accountId) {
+		if(StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(accountId)) {
+			throw new BusinsessException(ErrorCodeEnum.YINGSHI_10001);
+		}
+		
+		Map<String, String> params = new HashMap<>();
+    	params.put("accessToken", accessToken);
+    	params.put("accountId", accountId); 
+    	JSONObject result = HttpClientUtil.doPost(RAM_TOKEN_GET, params, CharEncoding.UTF_8);
+    	if(CommonConstant.SUCCESS.equals(result.getString("code"))) {
+    		return true;
+    	}else {
+    		throw new BusinsessException(ErrorCodeEnum.getEnum(result.getString("code")));
+    	}
+	}
+	
+	/**
+	 * 功能描述: 7.删除子账户。
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramAccountDelete(String accessToken, String accountId) {
+		if(StringUtils.isEmpty(accessToken) || StringUtils.isEmpty(accountId)) {
+			throw new BusinsessException(ErrorCodeEnum.YINGSHI_10001);
+		}
+		
+		Map<String, String> params = new HashMap<>();
+    	params.put("accessToken", accessToken);
+    	params.put("accountId", accountId); 
+    	JSONObject result = HttpClientUtil.doPost(RAM_ACCOUNT_DELETE, params, CharEncoding.UTF_8);
+    	if(CommonConstant.SUCCESS.equals(result.getString("code"))) {
+    		return true;
+    	}else {
+    		throw new BusinsessException(ErrorCodeEnum.getEnum(result.getString("code")));
+    	}
+	}
+	
+	/**
 	 * 创建B(大账户)模式的子账户。
 	 */
 	private static final String RAM_ACCOUNT_CREATE = "https://open.ys7.com/api/lapp/ram/account/create";
@@ -135,6 +233,22 @@ public class HKAccountApi {
 	 * 设置子账户的授权策略。
 	 */
 	private static final String RAM_POLICY_GET = "https://open.ys7.com/api/lapp/ram/policy/set";
+	/**
+	 * 增加子账户权限。
+	 */
+	private static final String RAM_STATEMENT_ADD = "https://open.ys7.com/api/lapp/ram/statement/add";
+	/**
+	 * 删除子账户权限。
+	 */
+	private static final String RAM_STATEMENT_DELETE = "https://open.ys7.com/api/lapp/ram/statement/delete";
+	/**
+	 * 获取B模式子账户accessToken。
+	 */
+	private static final String RAM_TOKEN_GET = "https://open.ys7.com/api/lapp/ram/token/get";
+	/**
+	 * 删除子账户。
+	 */
+	private static final String RAM_ACCOUNT_DELETE = "https://open.ys7.com/api/lapp/ram/account/delete";
 	
 	
 }

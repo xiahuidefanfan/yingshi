@@ -8,6 +8,8 @@ import com.hx.hkTest.dto.live.LiveVideoListDto;
 import com.hx.hkTest.dto.live.LiveVideoOpenDto;
 import com.hx.hkTest.hk.dto.HKAccessTokenDto;
 import com.hx.hkTest.hk.dto.account.HKRamAccountInfoDto;
+import com.hx.hkTest.hk.dto.account.Policy;
+import com.hx.hkTest.hk.dto.account.Statement;
 import com.hx.hkTest.hk.dto.device.select.CameraListDto;
 import com.hx.hkTest.hk.dto.device.select.DeviceCameraListDto;
 import com.hx.hkTest.hk.dto.device.select.DeviceCapacityDto;
@@ -408,6 +410,64 @@ public class ApiUtil {
 	 */
 	public static HKRamAccountInfoDto ramAccountGet(String accessToken, String accountId, String accountName) {
 		return HKAccountApi.ramAccountGet(accessToken, accountId, accountName);
+	}
+	
+	/**
+	 * 功能描述: 设置子账户的授权策略
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @param: policy：授权策略
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramPolicyGet(String accessToken, String accountId, Policy policy) {
+		return HKAccountApi.ramPolicyGet(accessToken, accountId, policy);
+	}
+	
+	/**
+	 * 功能描述: 增加子账户权限
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @param: statement：授权语句
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramStatementAdd(String accessToken, String accountId, Statement statement) {
+		return HKAccountApi.ramStatementAdd(accessToken, accountId, statement);
+	}
+	
+	/**
+	 * 功能描述: 删除子账户权限。
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @param: deviceSerial：设备序列号
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramStatementDelete(String accessToken, String accountId, String deviceSerial) {
+		return HKAccountApi.ramStatementDelete(accessToken, accountId, deviceSerial);
+	}
+	
+	/**
+	 * 功能描述: 获取B模式子账户accessToken。
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramTokenGet(String accessToken, String accountId) {
+		return HKAccountApi.ramTokenGet(accessToken, accountId);
+	}
+	
+	/**
+	 * 功能描述: 删除子账户。
+	 * @author xiahui
+	 * @param: accessToken：授权过程获取的access_token
+	 * @param: accountId：子账户Id
+	 * @date 2020年2月23日 下午2:49:43
+	 */
+	public static boolean ramAccountDelete(String accessToken, String accountId) {
+		return HKAccountApi.ramAccountDelete(accessToken, accountId);
 	}
 	
 }

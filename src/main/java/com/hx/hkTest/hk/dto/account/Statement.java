@@ -2,7 +2,7 @@ package com.hx.hkTest.hk.dto.account;
 
 /**
  * @ClassName: Statement.java
- * 功能描述：授权策略细则
+ * 功能描述：授权语句
  *
  * @version: v1.0.0
  * @author: xiahui
@@ -11,7 +11,7 @@ package com.hx.hkTest.hk.dto.account;
  * Modification History:
  * Date         Author          Version            Description
  *-------------------------------------------------------------*
- * 2020年2月23日     xiahui           v1.0.0             授权策略细则
+ * 2020年2月23日     xiahui           v1.0.0             授权语句
  */
 public class Statement {
 	// 权限列表 例如："Permission": "GET,UPDATE,REAL"
