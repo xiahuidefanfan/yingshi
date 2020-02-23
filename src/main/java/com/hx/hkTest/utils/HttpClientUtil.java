@@ -13,6 +13,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSONObject;  
 /**
@@ -29,7 +31,8 @@ import com.alibaba.fastjson.JSONObject;
  * 2019年10月25日     xiahui           v1.0.0      利用HttpClient进行post请求的工具类 
  */
 public class HttpClientUtil {  
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class);
 	public static JSONObject doPost(String url, Map<String, String> map, String charset){  
         HttpClient httpClient = null;  
         HttpPost httpPost = null;  
@@ -50,13 +53,15 @@ public class HttpClientUtil {
                 UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list,charset);  
                 httpPost.setEntity(entity);  
             }  
-            
-            response = httpClient.execute(httpPost);  
+            LOGGER.info("请求地址：{}，入参为：{}", url, list);
+            response = httpClient.execute(httpPost);
+            LOGGER.info("请求地址：{}，入参为：{}，原始响应为：{}", url, response);
             if(response != null){  
-                HttpEntity resEntity = response.getEntity();  
+                HttpEntity resEntity = response.getEntity();
                 if(resEntity != null){  
                     result = EntityUtils.toString(resEntity,charset);  
-                }  
+                } 
+                LOGGER.info("请求地址：{}，入参为：{}，解析响应为：{}", url, result);
             }  
         }catch(Exception ex){  
             ex.printStackTrace();  

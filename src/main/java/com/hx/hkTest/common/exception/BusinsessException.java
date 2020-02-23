@@ -52,8 +52,8 @@ public class BusinsessException extends RuntimeException {
     }
 
     public BusinsessException(ErrorCodeEnum codeEnum, Object... args) {
-    	super(StringParser.parseString(codeEnum.msg(), args));
-        this.code = codeEnum.code();
+    	super(StringParser.parseString(codeEnum.getMsg(), args));
+        this.code = codeEnum.getCode();
     }
 
     public String getCode() {

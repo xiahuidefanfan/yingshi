@@ -1,23 +1,41 @@
 package com.hx.hkTest.common.cache;
 
-import com.hx.hkTest.yingshi.util.api.AccessTokenApi;
+import com.hx.hkTest.hk.dto.HKAccessTokenDto;
+import com.hx.hkTest.hk.util.api.AccessTokenApi;
 
+/**
+ * @ClassName: YingShiCache.java
+ * 功能描述：海康大账号token
+ *
+ * @version: v1.0.0
+ * @author: xiahui
+ * @date: 2020年2月22日 下午11:33:04 
+ *
+ * Modification History:
+ * Date         Author          Version            Description
+ *-------------------------------------------------------------*
+ * 2020年2月22日     xiahui           v1.0.0            海康大账号token
+ */
 public class YingShiCache {
-	public static String accessToken = null;
+	private static String accessToken = null;
+	private static long expireTime = -1;
 	
 	/**
-	 * 功能描述：accessToken缓存
+	 * 功能描述：获取accessToken
 	 * @author: xiahui
 	 * @date: 2019年10月26日 下午1:45:05
 	 */
 	public static String getAccessToken() {
-		if(null == accessToken) {
+		if(System.currentTimeMillis() >= expireTime) {
 			synchronized (YingShiCache.class) {
-				if(null == accessToken) {
-					accessToken = AccessTokenApi.getToken();
+				if(System.currentTimeMillis() >= expireTime) {
+					HKAccessTokenDto hkAccessTokenDto = AccessTokenApi.getToken();
+					accessToken = hkAccessTokenDto.getAccessToken();
+					expireTime = hkAccessTokenDto.getExpireTime();
 				}
 			}
 		}
 		return accessToken;
 	}
+	
 }

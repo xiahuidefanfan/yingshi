@@ -2,6 +2,9 @@ package com.hx.hkTest.yingshi.util.api;
 
 import org.junit.Test;
 
+import com.hx.hkTest.hk.dto.HKAccessTokenDto;
+import com.hx.hkTest.hk.util.api.AccessTokenApi;
+
 public class AccessTokenApiTest {
 
 	/**
@@ -11,7 +14,7 @@ public class AccessTokenApiTest {
 	 */
 	@Test
 	public void getToken() {
-		String token = AccessTokenApi.getToken();
+		HKAccessTokenDto token = AccessTokenApi.getToken();
 		System.out.println(token);
 	}
 }

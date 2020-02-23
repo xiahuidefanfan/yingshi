@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.hx.hkTest.yingshi.dto.live.LiveVideoListDto;
+import com.hx.hkTest.dto.live.LiveVideoListDto;
+import com.hx.hkTest.hk.util.api.LiveApi;
 
 public class LiveApiTest {
 

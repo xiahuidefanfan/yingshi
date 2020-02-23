@@ -19,9 +19,16 @@ public enum ErrorCodeEnum {
 	YINGSHI_10001("10001", "萤石接口参数错误！"),
 	YINGSHI_10002("10002", "accessToken异常或过期!"),
 	YINGSHI_10005("10005", "appKey异常！"),
+	YINGSHI_10013("10013", "无权限调用！"),
 	YINGSHI_10017("10017", "appKey不存在！"),
 	YINGSHI_10026("10026", "设备数量超出个人版限制，当前设备无法操作，请充值企业版！"),
 	YINGSHI_10030("10030", "appkey和appSecret不匹配！"),
+	YINGSHI_10031("10031", "子账户或萤石用户没有权限！"),
+	YINGSHI_10032("10032", "子账户名不存在！"),
+	YINGSHI_10033("10033", "子账号未设置授权策略！"),
+	YINGSHI_10034("10034", "子账号已存在！"),
+	YINGSHI_10035("10035", "获取子账户AccessToken异常！"),
+	YINGSHI_10036("10036", "子账号被禁用！"),
 	YINGSHI_10051("10051", "无权限进行抓图！"),
 	YINGSHI_20002("20002", "设备不存在！"),
 	YINGSHI_20006("20006", "网络异常！"),
@@ -34,6 +41,7 @@ public enum ErrorCodeEnum {
 	YINGSHI_20017("20017", "设备已被自己添加！"),
 	YINGSHI_20018("20018", "该用户不拥有该设备	！"),
 	YINGSHI_20032("20032", "该用户下该通道不存在！"),
+	YINGSHI_50000("50000", "服务器异常！"),
 	YINGSHI_60012("60012", "未知错误！"),
 	YINGSHI_60016("60016", "加密未开启，无需关闭！"),
 	YINGSHI_60017("60017", "设备抓图失败！"),
@@ -66,11 +74,11 @@ public enum ErrorCodeEnum {
 	private String code;
 	private String msg;
 
-	public String msg() {
+	public String getMsg() {
 		return String.format("错误码:%s,%s", code, msg);
 	}
 
-	public String code() {
+	public String getCode() {
 		return code;
 	}
 
@@ -81,7 +89,7 @@ public enum ErrorCodeEnum {
 
 	public static ErrorCodeEnum getEnum(String code) {
 		for (ErrorCodeEnum ele : ErrorCodeEnum.values()) {
-			if (ele.code().equals(code)) {
+			if (ele.getCode().equals(code)) {
 				return ele;
 			}
 		}
